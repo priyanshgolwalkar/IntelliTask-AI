@@ -1,0 +1,240 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User account profile and preferences",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "description": "Firebase Auth unique identifier",
+          "maxLength": 128
+        },
+        "fullName": {
+          "type": "string",
+          "description": "User display full name",
+          "maxLength": 120
+        },
+        "email": {
+          "type": "string",
+          "description": "User email address",
+          "maxLength": 160
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "ISO timestamp of account creation",
+          "maxLength": 40
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "ISO timestamp of last profile update",
+          "maxLength": 40
+        },
+        "emailVerified": {
+          "type": "boolean",
+          "description": "Whether the user's email has been verified"
+        },
+        "preferences": {
+          "type": "object",
+          "description": "User configuration preferences"
+        }
+      },
+      "required": ["uid", "fullName", "email", "createdAt"]
+    },
+    "TaskItem": {
+      "title": "TaskItem",
+      "description": "Isolated task item owned by an authenticated user",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Task identifier",
+          "maxLength": 64
+        },
+        "userId": {
+          "type": "string",
+          "description": "Owner user UID",
+          "maxLength": 128
+        },
+        "title": {
+          "type": "string",
+          "description": "Task title",
+          "maxLength": 200
+        },
+        "description": {
+          "type": "string",
+          "description": "Detailed task description",
+          "maxLength": 2000
+        },
+        "status": {
+          "type": "string",
+          "description": "Task lifecycle status",
+          "enum": ["todo", "in_progress", "in_review", "completed", "blocked"]
+        },
+        "priority": {
+          "type": "string",
+          "description": "Task urgency priority",
+          "enum": ["low", "medium", "high", "urgent"]
+        },
+        "assignedAgent": {
+          "type": "string",
+          "description": "Agent or assignee name",
+          "maxLength": 100
+        },
+        "tags": {
+          "type": "array",
+          "description": "List of task tags"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "ISO timestamp of task creation",
+          "maxLength": 40
+        },
+        "dueDate": {
+          "type": "string",
+          "description": "ISO timestamp of due date",
+          "maxLength": 40
+        },
+        "estimatedHours": {
+          "type": "number",
+          "description": "Estimated hours"
+        },
+        "subtasks": {
+          "type": "array",
+          "description": "Checklist subtasks"
+        },
+        "source": {
+          "type": "string",
+          "description": "Creation source",
+          "maxLength": 50
+        }
+      },
+      "required": ["id", "userId", "title", "status", "priority", "createdAt"]
+    },
+    "ConversationMessage": {
+      "title": "ConversationMessage",
+      "description": "User AI assistant chat conversation message",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Message identifier",
+          "maxLength": 64
+        },
+        "userId": {
+          "type": "string",
+          "description": "Owner user UID",
+          "maxLength": 128
+        },
+        "role": {
+          "type": "string",
+          "enum": ["user", "assistant"]
+        },
+        "content": {
+          "type": "string",
+          "description": "Message text content",
+          "maxLength": 10000
+        },
+        "timestamp": {
+          "type": "string",
+          "maxLength": 40
+        }
+      },
+      "required": ["id", "userId", "role", "content", "timestamp"]
+    },
+    "AgentExecutionLog": {
+      "title": "AgentExecutionLog",
+      "description": "Autonomous multi-agent execution log showing decisions, tool calls, and results",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "maxLength": 64
+        },
+        "userId": {
+          "type": "string",
+          "maxLength": 128
+        },
+        "agentId": {
+          "type": "string",
+          "maxLength": 64
+        },
+        "agentName": {
+          "type": "string",
+          "maxLength": 100
+        },
+        "action": {
+          "type": "string",
+          "maxLength": 200
+        },
+        "decision": {
+          "type": "string",
+          "maxLength": 1000
+        },
+        "status": {
+          "type": "string",
+          "maxLength": 40
+        },
+        "timestamp": {
+          "type": "string",
+          "maxLength": 40
+        }
+      },
+      "required": ["id", "userId", "agentId", "agentName", "action", "timestamp"]
+    },
+    "AgentMemoryItem": {
+      "title": "AgentMemoryItem",
+      "description": "Persistent memory item learned by agents for an authenticated user",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "maxLength": 64
+        },
+        "userId": {
+          "type": "string",
+          "maxLength": 128
+        },
+        "agentId": {
+          "type": "string",
+          "maxLength": 64
+        },
+        "category": {
+          "type": "string",
+          "maxLength": 100
+        },
+        "content": {
+          "type": "string",
+          "maxLength": 2000
+        },
+        "updatedAt": {
+          "type": "string",
+          "maxLength": 40
+        }
+      },
+      "required": ["id", "userId", "agentId", "category", "content", "updatedAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "User account profile document"
+    },
+    "/users/{userId}/tasks/{taskId}": {
+      "schema": "TaskItem",
+      "description": "Isolated task items belonging to the user"
+    },
+    "/users/{userId}/conversations/{messageId}": {
+      "schema": "ConversationMessage",
+      "description": "Isolated assistant chat history belonging to the user"
+    },
+    "/users/{userId}/agent_logs/{logId}": {
+      "schema": "AgentExecutionLog",
+      "description": "Isolated agent execution decisions and tool call logs"
+    },
+    "/users/{userId}/agent_memory/{memoryId}": {
+      "schema": "AgentMemoryItem",
+      "description": "Isolated persistent memory store for user workflows"
+    }
+  }
+}

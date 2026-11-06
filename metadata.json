@@ -1,0 +1,6 @@
+{
+  "name": "IntelliTask AI",
+  "description": "Enterprise autonomous task orchestration, AI planning, agent monitoring, and research platform with FastAPI and LangGraph integration interfaces.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

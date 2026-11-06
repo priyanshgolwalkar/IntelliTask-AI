@@ -1,0 +1,58 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  :root {
+    --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  }
+  
+  body {
+    font-family: var(--font-sans);
+  }
+
+  /* Smooth scrollbars */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(150, 150, 150, 0.2);
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(150, 150, 150, 0.4);
+  }
+}
+
+
+/* IntelliTask light theme. Dark remains the default. These overrides cover the
+   existing neutral Tailwind utility classes without requiring page rewrites. */
+:root.light body {
+  background: #f5f6fa;
+  color: #171923;
+  color-scheme: light;
+}
+:root.light [class*="bg-neutral-950"] { background-color: #f5f6fa !important; }
+:root.light [class*="bg-neutral-900"] { background-color: #ffffff !important; }
+:root.light [class*="bg-neutral-800"] { background-color: #e9edf5 !important; }
+:root.light [class*="bg-neutral-700"] { background-color: #dce2ed !important; }
+:root.light [class*="text-white"],
+:root.light [class*="text-neutral-100"],
+:root.light [class*="text-neutral-200"] { color: #172033 !important; }
+:root.light [class*="text-neutral-300"] { color: #344054 !important; }
+:root.light [class*="text-neutral-400"] { color: #596579 !important; }
+:root.light [class*="text-neutral-500"] { color: #687386 !important; }
+:root.light [class*="border-neutral-800"],
+:root.light [class*="border-neutral-700"] { border-color: #d8deea !important; }
+:root.light [class*="border-neutral-800/"] { border-color: #d8deea !important; }
+:root.light [class*="hover:bg-neutral-900"]:hover,
+:root.light [class*="hover:bg-neutral-800"]:hover { background-color: #e9edf5 !important; }
+:root.light [class*="hover:text-white"]:hover { color: #111827 !important; }
+:root.light input,
+:root.light textarea,
+:root.light select { color: #172033; }
+:root.light ::-webkit-scrollbar-thumb { background: rgba(70, 85, 110, 0.25); }
